@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../../core/utlis/app_router.dart';
-import '../../../../../core/utlis/assets.dart';
-import '../../../../../core/utlis/styles.dart';
+import '../../../../../core/utils/app_router.dart';
+import '../../../../../core/utils/assets.dart';
+import '../../../../../core/utils/styles.dart';
+import 'book_rating.dart';
 
 class CustomBestSellerItem extends StatelessWidget {
   const CustomBestSellerItem({super.key});
@@ -53,14 +54,7 @@ class CustomBestSellerItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('19.99 EG', style: Styles.highlighted),
-                      Row(
-                        spacing: 8,
-                        children: [
-                          Icon(Icons.star, color: Colors.yellow),
-                          Text('4.9', style: Styles.whiteText),
-                          Text('(239)', style: Styles.caption),
-                        ],
-                      ),
+                      BookRating(),
                     ],
                   ),
                 ],
