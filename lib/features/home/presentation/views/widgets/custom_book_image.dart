@@ -1,30 +1,22 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
-import 'featured_listview_item.dart';
+import '../../../../../core/utils/assets.dart';
 
-class FeaturedListView extends StatelessWidget {
-  const FeaturedListView({super.key});
+class CustomBookImage extends StatelessWidget {
+  const CustomBookImage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.sizeOf(context).height * .32,
-      child: ScrollConfiguration(
-        behavior: ScrollConfiguration.of(context).copyWith(
-          scrollbars: true,
-          dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse},
-        ),
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.0),
-              child: CustomBookImage(),
-            );
-          },
+    return AspectRatio(
+      aspectRatio: 2.6 / 4,
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(AssetsData.testImage),
+            fit: BoxFit.cover,
+          ),
+          // color: Colors.red,
+          borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
       ),
     );

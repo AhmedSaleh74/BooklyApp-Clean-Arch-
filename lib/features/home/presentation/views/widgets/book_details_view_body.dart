@@ -1,6 +1,7 @@
 import 'package:bookly/core/utils/styles.dart';
 import 'package:bookly/features/home/presentation/views/widgets/book_rating.dart';
-import 'package:bookly/features/home/presentation/views/widgets/featured_listview_item.dart';
+import 'package:bookly/features/home/presentation/views/widgets/custom_book_image.dart';
+import 'package:bookly/features/home/presentation/views/widgets/similar_books_listview.dart';
 import 'package:flutter/material.dart';
 
 import 'books_action.dart';
@@ -12,7 +13,7 @@ class BookDetailsViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(32.0),
+      padding: const EdgeInsets.symmetric(horizontal: 32.0),
       child: Column(
         children: [
           const CustomBookDetailsAppBar(),
@@ -33,9 +34,19 @@ class BookDetailsViewBody extends StatelessWidget {
           const SizedBox(height: 6),
           Text('Rudyard Kipling', style: Styles.caption),
           const SizedBox(height: 18),
-          BookRating(mainAxisAlignment: MainAxisAlignment.center),
+          const BookRating(mainAxisAlignment: MainAxisAlignment.center),
           const SizedBox(height: 37),
-          BooksAction(),
+          const BooksAction(),
+          const SizedBox(height: 37),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'You can also like',
+              style: Styles.titleMedium.copyWith(color: Colors.white),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Expanded(child: SimilarBooksListview()),
         ],
       ),
     );
