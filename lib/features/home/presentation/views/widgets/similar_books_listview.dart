@@ -8,7 +8,7 @@ class SimilarBooksListview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.sizeOf(context).height * .1,
+      height: MediaQuery.sizeOf(context).height * .15,
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(
           scrollbars: true,
