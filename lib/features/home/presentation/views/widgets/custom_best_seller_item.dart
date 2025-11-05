@@ -50,7 +50,7 @@ class CustomBestSellerItem extends StatelessWidget {
                     Row(
                       spacing: 8,
                       children: [
-                        Icon(Icons.star),
+                        Icon(Icons.star, color: Colors.yellow),
                         Text('4.9', style: Styles.whiteText),
                         Text('(239)', style: Styles.caption),
                       ],
