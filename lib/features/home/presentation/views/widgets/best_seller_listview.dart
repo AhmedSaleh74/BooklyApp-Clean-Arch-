@@ -9,22 +9,15 @@ class BestSellerListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ScrollConfiguration(
-        behavior: ScrollConfiguration.of(context).copyWith(
-          scrollbars: true,
-          dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse},
-        ),
-        child: ListView.builder(
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return const Padding(
-              padding: EdgeInsets.all(4.0),
-              child: CustomBestSellerItem(),
-            );
-          },
-        ),
-      ),
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return const Padding(
+          padding: EdgeInsets.all(4.0),
+          child: CustomBestSellerItem(),
+        );
+      },
     );
   }
 }
