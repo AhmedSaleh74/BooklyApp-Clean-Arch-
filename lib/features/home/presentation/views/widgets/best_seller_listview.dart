@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import 'custom_best_seller_item.dart';
@@ -15,7 +13,7 @@ class BestSellerListView extends StatelessWidget {
       itemBuilder: (context, index) {
         return const Padding(
           padding: EdgeInsets.all(4.0),
-          child: CustomBestSellerItem(),
+          child: BookListViewItem(),
         );
       },
     );
