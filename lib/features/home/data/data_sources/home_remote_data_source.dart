@@ -8,13 +8,11 @@ abstract class HomeRemoteDataSource {
 class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
   @override
   Future<List<BookEntity>> getFeaturedBooks() {
-    // TODO: implement getFeaturedBooks
     throw UnimplementedError();
   }
 
   @override
   Future<List<BookEntity>> getNewestBooks() {
-    // TODO: implement getNewestBooks
     throw UnimplementedError();
   }
 }
