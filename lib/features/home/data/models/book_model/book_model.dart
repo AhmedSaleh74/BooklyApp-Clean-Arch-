@@ -1,4 +1,4 @@
-import 'package:bookly/Features/home/domain/entities/book_entity.dart';
+import 'package:bookly/features/home/domain/entities/book_entity.dart';
 
 import 'access_info.dart';
 import 'sale_info.dart';
@@ -30,7 +30,7 @@ class BookModel extends BookEntity {
          bookTitle: volumeInfo!.title!,
          bookAuthor: volumeInfo.authors?[0],
          bookRating: volumeInfo.averageRating,
-         bookPrice: 0,
+         bookPrice: saleInfo!.saleability!,
        );
 
   factory BookModel.fromJson(Map<String, dynamic> json) => BookModel(

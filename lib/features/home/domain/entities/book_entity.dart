@@ -4,7 +4,7 @@ class BookEntity {
   final String bookTitle;
   final String? bookAuthor;
   final num? bookRating;
-  final num? bookPrice;
+  final String bookPrice;
 
   BookEntity({
     required this.bookID,
