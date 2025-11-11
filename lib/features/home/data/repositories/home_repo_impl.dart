@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 
 import '../../../../core/errors/failure.dart';
 import '../../domain/entities/book_entity.dart';
@@ -25,7 +26,10 @@ class HomeRepoImp extends HomeRepo {
       books = await homeRemoteDataSource.getFeaturedBooks();
       return right(books);
     } catch (e) {
-      return left(Failure());
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(e));
+      }
+      return left(ServerFailure(message: e.toString()));
     }
   }
 
@@ -40,7 +44,10 @@ class HomeRepoImp extends HomeRepo {
       books = await homeRemoteDataSource.getNewestBooks();
       return right(books);
     } catch (e) {
-      return left(Failure());
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(e));
+      }
+      return left(ServerFailure(message: e.toString()));
     }
   }
 }
