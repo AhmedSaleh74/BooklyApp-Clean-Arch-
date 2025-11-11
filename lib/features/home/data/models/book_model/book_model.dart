@@ -25,37 +25,42 @@ class BookModel extends BookEntity {
     this.accessInfo,
     this.searchInfo,
   }) : super(
-         bookID: id!,
+         bookID: id ?? 'no_id', // قيمة افتراضية لو null
          bookImage: volumeInfo?.imageLinks?.thumbnail ?? '',
-         bookTitle: volumeInfo!.title!,
-         bookAuthor: volumeInfo.authors?[0],
-         bookRating: volumeInfo.averageRating,
-         bookPrice: saleInfo!.saleability!,
+         bookTitle: volumeInfo?.title ?? 'No Title',
+         bookAuthor:
+             (volumeInfo?.authors?.isNotEmpty ?? false)
+                 ? volumeInfo!.authors![0]
+                 : 'Unknown',
+         bookRating: volumeInfo?.averageRating ?? 0,
+         bookPrice: saleInfo?.saleability ?? 'Free',
        );
 
+  /// تحويل من JSON
   factory BookModel.fromJson(Map<String, dynamic> json) => BookModel(
     kind: json['kind'] as String?,
     id: json['id'] as String?,
     etag: json['etag'] as String?,
     selfLink: json['selfLink'] as String?,
     volumeInfo:
-        json['volumeInfo'] == null
-            ? null
-            : VolumeInfo.fromJson(json['volumeInfo'] as Map<String, dynamic>),
+        json['volumeInfo'] != null
+            ? VolumeInfo.fromJson(json['volumeInfo'] as Map<String, dynamic>)
+            : null,
     saleInfo:
-        json['saleInfo'] == null
-            ? null
-            : SaleInfo.fromJson(json['saleInfo'] as Map<String, dynamic>),
+        json['saleInfo'] != null
+            ? SaleInfo.fromJson(json['saleInfo'] as Map<String, dynamic>)
+            : null,
     accessInfo:
-        json['accessInfo'] == null
-            ? null
-            : AccessInfo.fromJson(json['accessInfo'] as Map<String, dynamic>),
+        json['accessInfo'] != null
+            ? AccessInfo.fromJson(json['accessInfo'] as Map<String, dynamic>)
+            : null,
     searchInfo:
-        json['searchInfo'] == null
-            ? null
-            : SearchInfo.fromJson(json['searchInfo'] as Map<String, dynamic>),
+        json['searchInfo'] != null
+            ? SearchInfo.fromJson(json['searchInfo'] as Map<String, dynamic>)
+            : null,
   );
 
+  /// تحويل Model → JSON
   Map<String, dynamic> toJson() => {
     'kind': kind,
     'id': id,
@@ -66,4 +71,19 @@ class BookModel extends BookEntity {
     'accessInfo': accessInfo?.toJson(),
     'searchInfo': searchInfo?.toJson(),
   };
+
+  /// تحويل Model → Entity بطريقة آمنة
+  BookEntity toEntity() {
+    return BookEntity(
+      bookID: id ?? 'no_id',
+      bookImage: volumeInfo?.imageLinks?.thumbnail ?? '',
+      bookTitle: volumeInfo?.title ?? 'No Title',
+      bookAuthor:
+          (volumeInfo?.authors?.isNotEmpty ?? false)
+              ? volumeInfo!.authors![0]
+              : 'Unknown',
+      bookRating: volumeInfo?.averageRating ?? 0,
+      bookPrice: saleInfo?.saleability ?? 'Free',
+    );
+  }
 }
