@@ -1,4 +1,4 @@
-import 'package:bookly/Features/home/domain/entities/book_entity.dart';
+import 'package:bookly/features/home/domain/entities/book_entity.dart';
 import 'package:bookly/constants.dart';
 import 'package:bookly/core/utils/api_service.dart';
 import '../../../../core/utils/functions/save_books_data.dart';
@@ -39,7 +39,8 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
     final List<BookEntity> books = [];
 
     for (var bookMap in data['items']) {
-      books.add(BookModel.fromJson(bookMap) as BookEntity);
+      final bookModel = BookModel.fromJson(bookMap);
+      books.add(bookModel.toEntity()); // تحويل صريح لـ BookEntity
     }
     return books;
   }
