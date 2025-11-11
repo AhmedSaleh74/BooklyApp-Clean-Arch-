@@ -6,14 +6,12 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   // تهيئة Hive للعمل مع Flutter
-  // await Hive.initFlutter();
-
+  await Hive.initFlutter();
   Hive.registerAdapter(BookEntityAdapter());
-
-  await Hive.openBox(kFeaturedBox);
-
+  await Hive.openBox<BookEntity>(kFeaturedBox);
+  await Hive.openBox<BookEntity>(kNewestBox);
   runApp(const BookApp());
 }
 
