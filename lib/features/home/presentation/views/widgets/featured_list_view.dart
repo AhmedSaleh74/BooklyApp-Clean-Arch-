@@ -14,65 +14,50 @@ class FeaturedListView extends StatefulWidget {
 
 class _FeaturedListViewState extends State<FeaturedListView> {
   var nextPage = 1;
+  var isLoadingMore = false;
   late final ScrollController _scrollController;
-  bool _isFetchingMore = false;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    _scrollController.addListener(() {
+    _scrollController.addListener(() async {
       final maxScroll = _scrollController.position.maxScrollExtent;
       final currentScroll = _scrollController.position.pixels;
 
-      if (!_isFetchingMore && currentScroll >= 0.8 * maxScroll) {
-        _isFetchingMore = true;
-        context
-            .read<FeaturedBooksCubit>()
-            .getFeaturedBooks(pageNumber: nextPage)
-            .whenComplete(() => _isFetchingMore = false);
+      if (currentScroll >= 0.8 * maxScroll) {
+        if (!isLoadingMore) {
+          isLoadingMore = true;
+          await context.read<FeaturedBooksCubit>().getFeaturedBooks(
+            pageNumber: nextPage++,
+          );
+          isLoadingMore = false;
+        }
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FeaturedBooksCubit, FeaturedBooksState>(
-      builder: (context, state) {
-        if (state is FeaturedBooksLoading) {
-          return const Center(child: CircularProgressIndicator());
-        }
+    return SizedBox(
+      height: MediaQuery.sizeOf(context).height * .32,
+      child: ListView.builder(
+        controller: _scrollController,
+        scrollDirection: Axis.horizontal,
+        itemCount: widget.books.length,
+        itemBuilder: (context, index) {
+          if (index == widget.books.length) {
+            return const Center(
+              child: SizedBox(width: 40, child: CircularProgressIndicator()),
+            );
+          }
 
-        if (state is FeaturedBooksSuccess) {
-          return SizedBox(
-            height: MediaQuery.sizeOf(context).height * .32,
-            child: ListView.builder(
-              controller: _scrollController,
-              scrollDirection: Axis.horizontal,
-              itemCount: state.books.length,
-              itemBuilder: (context, index) {
-                if (index == state.books.length) {
-                  return const Center(
-                    child: SizedBox(
-                      width: 40,
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                }
-
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: CustomBookImage(
-                    image: state.books[index].bookImage ?? '',
-                  ),
-                );
-              },
-            ),
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: CustomBookImage(image: widget.books[index].bookImage ?? ''),
           );
-        }
-
-        return const SizedBox();
-      },
+        },
+      ),
     );
   }
 

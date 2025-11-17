@@ -10,8 +10,15 @@ abstract class HomeLocalDataSource {
 class HomeLocalDataSourceImpl extends HomeLocalDataSource {
   @override
   List<BookEntity> getFeaturedBooks({int pageNumber = 0}) {
+    final startIndex = pageNumber * 10;
+    final endIndex = (pageNumber + 1) * 10;
     final box = Hive.box<BookEntity>(kFeaturedBox);
-    return box.values.toList();
+    final length = box.values.length;
+    if (startIndex >= length || endIndex > length) {
+      return [];
+    }
+    print('$pageNumber ;;;;;;;;;;;;;;;;;;;;;;;;');
+    return box.values.toList().sublist(startIndex, endIndex);
   }
 
   @override
