@@ -36,7 +36,7 @@ class BookApp extends StatelessWidget {
           create: (context) {
             return FeaturedBooksCubit(
               GetFeaturedBooksUseCase(homeRepo: getIt.get<HomeRepoImp>()),
-            );
+            )..getFeaturedBooks();
           },
         ),
       ],

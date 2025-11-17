@@ -16,14 +16,18 @@ class HomeRepoImp extends HomeRepo {
   });
 
   @override
-  Future<Either<Failure, List<BookEntity>>> getFeaturedBooks() async {
+  Future<Either<Failure, List<BookEntity>>> getFeaturedBooks({
+    int pageNumber = 0,
+  }) async {
     try {
       List<BookEntity> books;
       books = homeLocalDataSource.getFeaturedBooks();
       if (books.isNotEmpty) {
         return right(books);
       }
-      books = await homeRemoteDataSource.getFeaturedBooks();
+      books = await homeRemoteDataSource.getFeaturedBooks(
+        pageNumber: pageNumber,
+      );
       return right(books);
     } catch (e) {
       if (e is DioException) {
