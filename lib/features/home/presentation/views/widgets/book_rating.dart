@@ -13,7 +13,6 @@ class BookRating extends StatelessWidget {
       children: [
         Icon(Icons.star, color: Colors.yellow),
         Text(bookRating.toString(), style: Styles.whiteText),
-        Text(bookRating.toString(), style: Styles.caption),
       ],
     );
   }

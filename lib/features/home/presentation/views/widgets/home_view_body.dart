@@ -47,7 +47,10 @@ class HomeViewBody extends StatelessWidget {
               ],
             ),
           ),
-          SliverFillRemaining(child: NewestBookListViewBlocConsumer()),
+          SliverFillRemaining(
+            fillOverscroll: true,
+            child: NewestBookListViewBlocConsumer(),
+          ),
         ],
       ),
     );
