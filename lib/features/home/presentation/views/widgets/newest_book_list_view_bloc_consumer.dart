@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/widgets/custom_snack_bar.dart';
 import '../../../domain/entities/book_entity.dart';
 import '../../manager/newest_books_cubit/newest_books_cubit.dart';
 import 'newest_book_list_view.dart';
@@ -24,9 +25,16 @@ class _NewestBookListViewBlocConsumerState
         if (state is NewestBooksSuccess) {
           books.addAll(state.books);
         }
+        if (state is NewestBooksPaginationFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            CustomSnackBar(message: state.message, backgroundColor: Colors.red),
+          );
+        }
       },
       builder: (context, state) {
-        if (state is NewestBooksSuccess) {
+        if (state is NewestBooksSuccess ||
+            state is NewestBooksPaginationLoading ||
+            state is NewestBooksPaginationFailure) {
           return NewestBooksListView(books: books);
         } else if (state is NewestBooksFailure) {
           return Text(state.message);
