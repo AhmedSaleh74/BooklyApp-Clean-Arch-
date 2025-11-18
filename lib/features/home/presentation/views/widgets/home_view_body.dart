@@ -1,8 +1,8 @@
 import 'package:bookly/core/utils/styles.dart';
 import 'package:flutter/material.dart';
-import 'best_seller_listview.dart';
 import 'custom_appbar.dart';
 import 'featured_books_list_view_bloc_consumer.dart';
+import 'newest_book_list_view_bloc_consumer.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
@@ -40,14 +40,14 @@ class HomeViewBody extends StatelessWidget {
                 FeaturedListViewBlocConsumer(),
                 SizedBox(height: 50),
                 Text(
-                  'Best Seller',
+                  'Newest Books',
                   style: Styles.titleMedium.copyWith(color: Colors.white),
                 ),
                 SizedBox(height: 16),
               ],
             ),
           ),
-          SliverFillRemaining(child: BestSellerListView()),
+          SliverFillRemaining(child: NewestBookListViewBlocConsumer()),
         ],
       ),
     );

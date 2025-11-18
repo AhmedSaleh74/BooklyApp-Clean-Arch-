@@ -1,14 +1,25 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../core/utils/app_router.dart';
-import '../../../../../core/utils/assets.dart';
 import '../../../../../core/utils/styles.dart';
 import 'book_rating.dart';
 
 class BookListViewItem extends StatelessWidget {
-  const BookListViewItem({super.key});
-
+  const BookListViewItem({
+    super.key,
+    required this.bookTitle,
+    required this.bookAuthor,
+    required this.bookPrice,
+    this.bookRating,
+    required this.bookImage,
+  });
+  final String bookImage;
+  final String bookTitle;
+  final String bookAuthor;
+  final String bookPrice;
+  final num? bookRating;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -21,15 +32,16 @@ class BookListViewItem extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: 2.7 / 4,
-              child: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(AssetsData.testImage),
-                    fit: BoxFit.cover,
-                  ),
-                  // color: Colors.red,
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                ),
+              child: CachedNetworkImage(
+                imageUrl: bookImage,
+                fit: BoxFit.cover,
+                placeholder:
+                    (context, url) => const Center(
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
+                errorWidget:
+                    (context, url, error) =>
+                        const Center(child: Icon(Icons.broken_image, size: 50)),
               ),
             ),
             SizedBox(width: 24),
@@ -39,13 +51,13 @@ class BookListViewItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'The Jungle Book by Rudyard Kipling The Jungle Book by Rudyard Kipling The Jungle Book by Rudyard Kipling The Jungle Book by Rudyard Kipling',
+                    bookTitle,
                     style: Styles.titleMedium.copyWith(color: Colors.white),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    'Rudyard Kipling',
+                    bookAuthor,
                     style: Styles.caption,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -53,8 +65,8 @@ class BookListViewItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('19.99 EG', style: Styles.highlighted),
-                      BookRating(),
+                      Text(bookPrice, style: Styles.highlighted),
+                      BookRating(bookRating: bookRating ?? 0),
                     ],
                   ),
                 ],

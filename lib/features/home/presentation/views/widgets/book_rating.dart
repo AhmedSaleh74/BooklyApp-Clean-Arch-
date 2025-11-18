@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../../../core/utils/styles.dart';
 
 class BookRating extends StatelessWidget {
-  const BookRating({super.key, this.mainAxisAlignment});
-
+  const BookRating({super.key, this.mainAxisAlignment, this.bookRating});
+  final num? bookRating;
   final MainAxisAlignment? mainAxisAlignment;
   @override
   Widget build(BuildContext context) {
@@ -12,8 +12,8 @@ class BookRating extends StatelessWidget {
       spacing: 8,
       children: [
         Icon(Icons.star, color: Colors.yellow),
-        Text('4.9', style: Styles.whiteText),
-        Text('(239)', style: Styles.caption),
+        Text(bookRating.toString(), style: Styles.whiteText),
+        Text(bookRating.toString(), style: Styles.caption),
       ],
     );
   }
