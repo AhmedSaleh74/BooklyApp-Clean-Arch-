@@ -1,4 +1,4 @@
-class BookSearchEntity {
+class SearchBookEntity {
   final String bookID;
   final String? bookImage;
   final String bookTitle;
@@ -6,7 +6,7 @@ class BookSearchEntity {
   final num? bookRating;
   final String bookPrice;
 
-  BookSearchEntity({
+  SearchBookEntity({
     required this.bookID,
     required this.bookImage,
     required this.bookTitle,
