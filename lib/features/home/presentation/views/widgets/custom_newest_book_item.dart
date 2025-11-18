@@ -1,3 +1,4 @@
+import 'package:bookly/features/home/domain/entities/book_entity.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -14,17 +15,19 @@ class BookListViewItem extends StatelessWidget {
     required this.bookPrice,
     this.bookRating,
     required this.bookImage,
+    required this.books,
   });
   final String bookImage;
   final String bookTitle;
   final String bookAuthor;
   final String bookPrice;
   final num? bookRating;
+  final BookEntity books;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.go(AppRouter.kBookDetailsView);
+        context.push(AppRouter.kBookDetailsView, extra: books);
       },
       child: SizedBox(
         height: 125,

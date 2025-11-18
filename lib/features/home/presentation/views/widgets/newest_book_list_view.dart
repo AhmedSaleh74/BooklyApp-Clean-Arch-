@@ -64,6 +64,7 @@ class _NewestBooksListViewState extends State<NewestBooksListView> {
             bookPrice: widget.books[index].bookPrice,
             bookRating: widget.books[index].bookRating,
             bookImage: widget.books[index].bookImage ?? '',
+            books: widget.books[index],
           ),
         );
       },

@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import '../../../../../core/widgets/custom_button.dart';
 
 class BooksAction extends StatelessWidget {
-  const BooksAction({super.key});
-
+  const BooksAction({super.key, required this.bookPrice});
+  final String bookPrice;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(
           child: CustomButton(
-            text: '19.99 EG',
+            text: bookPrice,
             textColor: Colors.blue,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(16),

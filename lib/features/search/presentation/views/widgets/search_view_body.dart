@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../home/domain/entities/book_entity.dart';
 import '../../../../home/presentation/views/widgets/custom_newest_book_item.dart';
 import 'custom_search_text_field.dart';
 
@@ -31,13 +32,21 @@ class SearchResultListView extends StatelessWidget {
     return ListView.builder(
       itemCount: 10,
       itemBuilder: (context, index) {
-        return const Padding(
-          padding: EdgeInsets.all(4.0),
+        return Padding(
+          padding: const EdgeInsets.all(4.0),
           child: BookListViewItem(
             bookTitle: '',
             bookAuthor: '',
             bookPrice: '',
             bookImage: '',
+            books: BookEntity(
+              bookID: '',
+              bookImage: '',
+              bookTitle: '',
+              bookAuthor: '',
+              bookRating: null,
+              bookPrice: '',
+            ),
           ),
         );
       },

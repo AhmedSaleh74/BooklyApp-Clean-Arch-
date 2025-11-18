@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'custom_book_image.dart';
 
 class SimilarBooksListview extends StatelessWidget {
-  const SimilarBooksListview({super.key});
-
+  const SimilarBooksListview({super.key, required this.image});
+  final String image;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -18,9 +18,9 @@ class SimilarBooksListview extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemCount: 10,
           itemBuilder: (context, index) {
-            return const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.0),
-              child: CustomBookImage(image: ''),
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: CustomBookImage(image: image),
             );
           },
         ),
