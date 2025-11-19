@@ -1,4 +1,3 @@
-import 'package:bookly/features/home/domain/entities/book_entity.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -6,9 +5,10 @@ import 'package:go_router/go_router.dart';
 import '../../../../../core/utils/app_router.dart';
 import '../../../../../core/utils/styles.dart';
 import '../../../../../core/widgets/book_rating.dart';
+import '../../../domain/entities/search_book_entity.dart';
 
-class BookListViewItem extends StatelessWidget {
-  const BookListViewItem({
+class SearchBookListViewItem extends StatelessWidget {
+  const SearchBookListViewItem({
     super.key,
     required this.bookTitle,
     required this.bookAuthor,
@@ -22,7 +22,7 @@ class BookListViewItem extends StatelessWidget {
   final String bookAuthor;
   final String bookPrice;
   final num? bookRating;
-  final BookEntity books;
+  final SearchBookEntity books;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

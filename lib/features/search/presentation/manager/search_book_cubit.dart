@@ -12,9 +12,9 @@ class SearchBookCubit extends Cubit<SearchBookState> {
   final SearchBooksUseCase searchBooksUseCase;
   Future<void> searchBooks({required String query, int pageNumber = 0}) async {
     if (pageNumber == 0) {
-      emit(SearchBookLoading());
+      emit(SearchBookLoading(query: query));
     } else {
-      emit(SearchBookPaginationLoading());
+      emit(SearchBookPaginationLoading(query: query));
     }
     final result = await searchBooksUseCase.call(
       SearchCaseParams(query: query, page: pageNumber),
@@ -22,9 +22,20 @@ class SearchBookCubit extends Cubit<SearchBookState> {
     result.fold(
       (failure) =>
           pageNumber == 0
-              ? emit(SearchBookFailure(message: failure.message))
-              : emit(SearchBookPaginationFailure(message: failure.message)),
-      (books) => emit(SearchBookSuccess(books: books)),
+              ? emit(SearchBookFailure(message: failure.message, query: query))
+              : emit(
+                SearchBookPaginationFailure(
+                  message: failure.message,
+                  query: query,
+                ),
+              ),
+      (books) => emit(
+        SearchBookSuccess(
+          books: books,
+          query: query,
+          isPagination: pageNumber != 0,
+        ),
+      ),
     );
   }
 }
