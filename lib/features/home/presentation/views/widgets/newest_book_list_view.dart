@@ -2,6 +2,7 @@ import 'package:bookly/features/home/domain/entities/book_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/utils/functions/setup_pagination.dart';
 import '../../manager/newest_books_cubit/newest_books_cubit.dart';
 import 'custom_newest_book_item.dart';
 
@@ -14,39 +15,26 @@ class NewestBooksListView extends StatefulWidget {
 }
 
 class _NewestBooksListViewState extends State<NewestBooksListView> {
-  bool isLoadingMore = false;
-  int nextPage = 1;
   late final ScrollController _scrollController;
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    _scrollController.addListener(_scrollListener);
-  }
+    setupPagination(
+      controller: _scrollController,
+      loadPage:
+          (page) =>
+              context.read<NewestBooksCubit>().getNewestBooks(pageNumber: page),
+    );
 
-  void _scrollListener() async {
-    if (_scrollController.hasClients) {
-      final maxScroll = _scrollController.position.maxScrollExtent;
-      final currentScroll = _scrollController.offset;
-      final threshold = maxScroll * 0.7;
-
-      if (currentScroll >= threshold) {
-        if (!isLoadingMore) {
-          isLoadingMore = true;
-          await context.read<NewestBooksCubit>().getNewestBooks(
-            pageNumber: nextPage++,
-          );
-          isLoadingMore = false;
-        }
-      }
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<NewestBooksCubit>().getNewestBooks(pageNumber: 1);
+    });
   }
 
   @override
   void dispose() {
-    _scrollController
-      ..removeListener(_scrollListener)
-      ..dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 

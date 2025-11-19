@@ -1,6 +1,7 @@
 import 'package:bookly/features/home/domain/entities/book_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/utils/functions/setup_pagination.dart';
 import '../../manager/featured_books_cubit/featured_books_cubit.dart';
 import 'custom_book_image.dart';
 
@@ -13,27 +14,23 @@ class FeaturedListView extends StatefulWidget {
 }
 
 class _FeaturedListViewState extends State<FeaturedListView> {
-  var nextPage = 1;
-  var isLoadingMore = false;
   late final ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    _scrollController.addListener(() async {
-      final maxScroll = _scrollController.position.maxScrollExtent;
-      final currentScroll = _scrollController.position.pixels;
 
-      if (currentScroll >= 0.8 * maxScroll) {
-        if (!isLoadingMore) {
-          isLoadingMore = true;
-          await context.read<FeaturedBooksCubit>().getFeaturedBooks(
-            pageNumber: nextPage++,
-          );
-          isLoadingMore = false;
-        }
-      }
+    setupPagination(
+      controller: _scrollController,
+      loadPage:
+          (page) => context.read<FeaturedBooksCubit>().getFeaturedBooks(
+            pageNumber: page,
+          ),
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<FeaturedBooksCubit>().getFeaturedBooks(pageNumber: 1);
     });
   }
 

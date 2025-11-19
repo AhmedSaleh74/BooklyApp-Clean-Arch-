@@ -1,6 +1,7 @@
 import 'package:bookly/features/search/presentation/views/widgets/search_book_list_view_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/utils/functions/setup_pagination.dart';
 import '../../../domain/entities/search_book_entity.dart';
 import '../../manager/search_book_cubit.dart';
 
@@ -18,40 +19,32 @@ class SearchResultListView extends StatefulWidget {
 }
 
 class _SearchResultListViewState extends State<SearchResultListView> {
-  bool isLoadingMore = false;
-  int nextPage = 1;
   late final ScrollController _scrollController;
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    _scrollController.addListener(_scrollListener);
-  }
 
-  void _scrollListener() async {
-    if (_scrollController.hasClients) {
-      final maxScroll = _scrollController.position.maxScrollExtent;
-      final currentScroll = _scrollController.offset;
-      final threshold = maxScroll * 0.7;
-
-      if (currentScroll >= threshold) {
-        if (!isLoadingMore) {
-          isLoadingMore = true;
-          await context.read<SearchBookCubit>().searchBooks(
-            pageNumber: nextPage++,
+    setupPagination(
+      controller: _scrollController,
+      loadPage:
+          (page) => context.read<SearchBookCubit>().searchBooks(
+            pageNumber: page,
             query: widget.query,
-          );
-          isLoadingMore = false;
-        }
-      }
-    }
+          ),
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<SearchBookCubit>().searchBooks(
+        pageNumber: 1,
+        query: widget.query,
+      );
+    });
   }
 
   @override
   void dispose() {
-    _scrollController
-      ..removeListener(_scrollListener)
-      ..dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
