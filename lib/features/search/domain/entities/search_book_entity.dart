@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 part 'search_book_entity.g.dart'; // لتوليد الكود
 
-@HiveType(typeId: 0)
+@HiveType(typeId: 1)
 class SearchBookEntity {
   @HiveField(0)
   final String bookID;
