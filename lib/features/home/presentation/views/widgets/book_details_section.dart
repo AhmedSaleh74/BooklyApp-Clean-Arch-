@@ -1,8 +1,6 @@
 import 'package:bookly/core/utils/functions/open_url.dart';
 import 'package:bookly/features/home/domain/entities/book_entity.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import '../../../../../core/utils/styles.dart';
 import '../../../../../core/widgets/book_rating.dart';
 import 'books_action.dart';
