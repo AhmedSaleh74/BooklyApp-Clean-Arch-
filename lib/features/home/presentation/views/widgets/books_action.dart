@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../../../core/widgets/custom_button.dart';
 
 class BooksAction extends StatelessWidget {
-  const BooksAction({super.key, required this.bookPrice});
+  const BooksAction({super.key, required this.bookPrice, this.onPress});
   final String bookPrice;
+  final VoidCallback? onPress;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -35,7 +36,7 @@ class BooksAction extends StatelessWidget {
             rightBorder: const BorderSide(color: Colors.blue, width: 2),
             topBorder: const BorderSide(color: Colors.blue, width: 2),
             bottomBorder: const BorderSide(color: Colors.blue, width: 2),
-            onPressed: () {},
+            onPressed: onPress ?? () {},
           ),
         ),
       ],

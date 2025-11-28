@@ -34,6 +34,7 @@ class BookModel extends BookEntity {
                  : 'Unknown',
          bookRating: volumeInfo?.averageRating ?? 0,
          bookPrice: saleInfo?.saleability ?? 'Free',
+         bookLinkPreview: volumeInfo?.previewLink ?? '',
        );
 
   /// تحويل من JSON
@@ -84,6 +85,7 @@ class BookModel extends BookEntity {
               : 'Unknown',
       bookRating: volumeInfo?.averageRating ?? 0,
       bookPrice: saleInfo?.saleability ?? 'Free',
+      bookLinkPreview: volumeInfo?.previewLink ?? '',
     );
   }
 }
