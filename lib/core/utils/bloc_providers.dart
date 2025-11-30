@@ -12,21 +12,21 @@ import 'functions/setup_service_locator.dart';
 
 List<BlocProvider> getAppBlocProviders() {
   return [
-    BlocProvider(
+    BlocProvider<FeaturedBooksCubit>(
       create:
-          (_) => FeaturedBooksCubit(
+          (context) => FeaturedBooksCubit(
             GetFeaturedBooksUseCase(homeRepo: getIt.get<HomeRepoImp>()),
           )..getFeaturedBooks(),
     ),
-    BlocProvider(
+    BlocProvider<NewestBooksCubit>(
       create:
-          (_) => NewestBooksCubit(
+          (context) => NewestBooksCubit(
             GetNewestBooksUseCase(homeRepo: getIt.get<HomeRepoImp>()),
           )..getNewestBooks(),
     ),
-    BlocProvider(
+    BlocProvider<SearchBookCubit>(
       create:
-          (_) => SearchBookCubit(
+          (context) => SearchBookCubit(
             SearchBooksUseCase(searchRepo: getIt.get<SearchRepoImpl>()),
           ),
     ),

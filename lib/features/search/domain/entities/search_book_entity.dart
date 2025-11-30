@@ -15,8 +15,11 @@ class SearchBookEntity {
   final num? bookRating;
   @HiveField(5)
   final String bookPrice;
+  @HiveField(6)
+  final String? bookLinkPreview;
 
   SearchBookEntity({
+    required this.bookLinkPreview,
     required this.bookID,
     required this.bookImage,
     required this.bookTitle,
